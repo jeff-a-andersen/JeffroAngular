@@ -1,5 +1,7 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
+import { AuthenticationService } from '../_services/authentication.service';
 
 import { User } from '../_models';
 import { UserService } from '../_services';
@@ -8,9 +10,12 @@ import { UserService } from '../_services';
 export class HomeComponent implements OnInit {
     users: User[] = [];
 
-    constructor(private userService: UserService) {}
+    isLoggedIn$: Observable<boolean>;
+
+    constructor(private userService: UserService, private authService: AuthenticationService) {}
 
     ngOnInit() {
+        this.isLoggedIn$ = this.authService.isLoggedIn;
         this.userService.getAll().pipe(first()).subscribe(users => {
             this.users = users;
         });
