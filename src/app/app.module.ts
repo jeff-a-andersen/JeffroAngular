@@ -14,8 +14,8 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';;
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
-import { MatMenuModule, MatIconModule } from '@angular/material';;
-import { NavbarComponent } from './navbar/navbar.component'
+import { MatMenuModule, MatIconModule, MatDividerModule } from '@angular/material';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
     imports: [
@@ -25,12 +25,13 @@ import { NavbarComponent } from './navbar/navbar.component'
         routing
 ,
         BrowserAnimationsModule,
-        MatMenuModule, MatIconModule
+        MatMenuModule, MatIconModule, MatDividerModule
     ],
     declarations: [
         AppComponent,
         HomeComponent,
-        LoginComponent,
+        LoginComponent
+,
         NavbarComponent
     ],
     providers: [
