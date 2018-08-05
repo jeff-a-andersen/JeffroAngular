@@ -11,7 +11,11 @@ import { routing }        from './app.routing';
 
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { HomeComponent } from './home';
-import { LoginComponent } from './login';
+import { LoginComponent } from './login';;
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+
+import { MatMenuModule, MatIconModule } from '@angular/material';;
+import { NavbarComponent } from './navbar/navbar.component'
 
 @NgModule({
     imports: [
@@ -19,11 +23,15 @@ import { LoginComponent } from './login';
         ReactiveFormsModule,
         HttpClientModule,
         routing
+,
+        BrowserAnimationsModule,
+        MatMenuModule, MatIconModule
     ],
     declarations: [
         AppComponent,
         HomeComponent,
-        LoginComponent
+        LoginComponent,
+        NavbarComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

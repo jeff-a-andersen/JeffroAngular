@@ -11,6 +11,9 @@ export class AuthenticationService {
     return this.loggedIn.asObservable(); // {2}
   }
 
+  setLoggedIn(loggedIn: boolean) {
+    this.loggedIn.next(loggedIn);
+  }
 
     constructor(private http: HttpClient) { }
 
