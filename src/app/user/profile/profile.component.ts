@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from '../../_models';
 import { UserService } from '../../_services';
 
@@ -13,11 +13,12 @@ import {
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit, OnChanges {
+export class ProfileComponent implements OnInit {
   user: User;
   submitted = false;
   loading = false;
   profileForm: FormGroup;
+  error = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,8 +40,6 @@ export class ProfileComponent implements OnInit, OnChanges {
         newPassword: [''],
         newPasswordConfirm: [null]
       });
-
-      this.ngOnChanges();
     });
   }
 
@@ -57,24 +56,36 @@ export class ProfileComponent implements OnInit, OnChanges {
       return;
     }
 
+    const newPwd = this.profileForm.controls['newPassword'].value;
+    const newPwdConf = this.profileForm.controls['newPasswordConfirm'].value;
+
     const user: User = new User();
+
+    if (newPwd) {
+      if (!newPwdConf) {
+        return;
+      } else if (newPwd !== newPwdConf) {
+        return;
+      } else {
+        user.newPassword = this.profileForm.controls['newPassword'].value;
+      }
+    }
 
     user.username = this.profileForm.controls['username'].value;
     user.firstName = this.profileForm.controls['firstName'].value;
     user.lastName = this.profileForm.controls['lastName'].value;
-    user.password = this.profileForm.controls['newPassword'].value;
-    this.loading = true;
-  }
+    user.confirmPassword = this.profileForm.controls['currentPassword'].value;
 
-  ngOnChanges(): void {
-    // this.profileForm.get('newPassword').valueChanges.subscribe(value => {
-    //   const newLocal = this.profileForm.get('newPasswordConfirm');
-    //   if (value) {
-    //     newLocal.setValidators(Validators.required);
-    //   } else {
-    //     newLocal.clearValidators();
-    //   }
-    //   newLocal.updateValueAndValidity();
-    // });
+    this.userService.updateCurrent(user).subscribe(
+      userUpd => {
+        this.user = userUpd;
+      },
+      error => {
+        this.error = error;
+        this.loading = false;
+      }
+    );
+
+    this.loading = true;
   }
 }

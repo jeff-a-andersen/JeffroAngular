@@ -1,8 +1,8 @@
 <div style="float:right;padding-right: 1em;" *ngIf="isLoggedIn$ | async">
-<button mat-icon-button [matMenuTriggerFor]="menu" style="height:52px;border-style:none;background-color: transparent;">
-  <mat-icon style="margin-top: 10px;">more_vert</mat-icon>
+  <button mat-icon-button [matMenuTriggerFor]="menu" style="height:47px;border-style:none;background-color: transparent;">
+    <mat-icon style="margin-top: 10px;">more_vert</mat-icon>
   </button>
-  <mat-menu #menu="matMenu" >
+  <mat-menu #menu="matMenu">
     <button mat-menu-item [routerLink]="['/profile']">
       <mat-icon>person</mat-icon>
       <span>Profile</span>

@@ -1,6 +1,6 @@
 <h2>Profile</h2>
 <form *ngIf="user" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-
+  <div *ngIf="error" class="alert alert-danger">{{error}}</div>
   <mat-grid-list [cols]="3" [rowHeight]="70">
     <mat-grid-tile>
       <mat-form-field class="example-full-width">
