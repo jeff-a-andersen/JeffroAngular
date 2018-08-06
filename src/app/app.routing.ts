@@ -8,9 +8,9 @@ import { SettingComponent } from './user/setting/setting.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+    { path: 'setting', component: SettingComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
-    { path: 'profile', component: ProfileComponent },
-    { path: 'setting', component: SettingComponent },
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
