@@ -10,4 +10,8 @@ export class UserService {
     getAll() {
         return this.http.get<User[]>('http://localhost:8080/user');
     }
+
+    getCurrent() {
+      return this.http.get<User>('http://localhost:8080/user/current');
+    }
 }
