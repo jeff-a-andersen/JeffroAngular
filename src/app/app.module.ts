@@ -39,7 +39,14 @@ import { SettingComponent } from './user/setting/setting.component';
     MatGridListModule,
     MatInputModule
   ],
-  declarations: [AppComponent, HomeComponent, LoginComponent, NavbarComponent, ProfileComponent, SettingComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    LoginComponent,
+    NavbarComponent,
+    ProfileComponent,
+    SettingComponent
+  ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

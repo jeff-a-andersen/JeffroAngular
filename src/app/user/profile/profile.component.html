@@ -1,40 +1,42 @@
 <h2>Profile</h2>
-<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+<form *ngIf="user" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
 
   <mat-grid-list [cols]="3" [rowHeight]="70">
     <mat-grid-tile>
       <mat-form-field class="example-full-width">
-        <input matInput placeholder="Username" value="{{user.username}}" [disabled]="true" name="username" id="username">
+        <input matInput placeholder="Username" value="{{user.username}}" formControlName="username" id="username">
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field class="example-full-width">
-        <input matInput placeholder="First name" value="{{user.firstName}}" [required]="true">
+        <input matInput placeholder="First name" value="{{user.firstName}}" [required]="true" formControlName="firstName" id="firstName">
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field class="example-full-width">
-        <input matInput placeholder="Last Name" value="{{user.lastName}}" [required]="true">
+        <input matInput placeholder="Last Name" value="{{user.lastName}}" [required]="true" formControlName="lastName" id="lastName">
       </mat-form-field>
     </mat-grid-tile>
     <!-- ------------- -->
     <mat-grid-tile>
       <mat-form-field class="example-full-width">
-        <input matInput placeholder="Current Password" type="password" [required]="true">
+        <input matInput placeholder="Current Password" type="password" [required]="true" formControlName="currentPassword" id="currentPassword">
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field class="example-full-width">
-        <input matInput placeholder="New Password" type="password">
+        <input matInput placeholder="New Password" type="password" formControlName="newPassword" id="newPassword">
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field class="example-full-width">
-        <input matInput placeholder="Confirm New Password" type="password">
+        <input matInput placeholder="Confirm New Password" [required]="this.profileForm.controls['newPassword'].value!=''" type="password"
+          formControlName="newPasswordConfirm" id="newPasswordConfirm">
       </mat-form-field>
     </mat-grid-tile>
 
   </mat-grid-list>
   <button [disabled]="loading" class="btn btn-primary">Save</button>
-  <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+  <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+  />
 </form>
