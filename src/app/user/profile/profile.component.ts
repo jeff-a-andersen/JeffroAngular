@@ -37,8 +37,18 @@ export class ProfileComponent implements OnInit {
         firstName: ['' + this.user.firstName, Validators.required],
         lastName: ['' + this.user.lastName, Validators.required],
         currentPassword: [''],
-        newPassword: [''],
-        newPasswordConfirm: [null]
+        newPassword: [
+          '',
+          Validators.pattern(
+            '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{8,}'
+          )
+        ],
+        newPasswordConfirm: [
+          null,
+          Validators.pattern(
+            '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{8,}'
+          )
+        ]
       });
     });
   }
@@ -88,4 +98,5 @@ export class ProfileComponent implements OnInit {
 
     this.loading = true;
   }
+
 }

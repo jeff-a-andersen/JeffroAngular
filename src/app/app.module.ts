@@ -2,6 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
@@ -37,7 +38,8 @@ import { SettingComponent } from './user/setting/setting.component';
     MatIconModule,
     MatDividerModule,
     MatGridListModule,
-    MatInputModule
+    MatInputModule,
+    PasswordStrengthMeterModule
   ],
   declarations: [
     AppComponent,
