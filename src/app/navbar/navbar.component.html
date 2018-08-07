@@ -12,6 +12,12 @@
       <span>Settings</span>
     </button>
     <mat-divider></mat-divider>
+    <button mat-menu-item [matMenuTriggerFor]="admin_menu">
+      <mat-icon>security</mat-icon>
+      <span>Administration</span>
+    </button>
+
+    <mat-divider></mat-divider>
     <button mat-menu-item [routerLink]="['/login']">
 
       <mat-icon>exit_to_app</mat-icon>
@@ -19,4 +25,13 @@
 
     </button>
   </mat-menu>
+
+
+  <mat-menu #admin_menu="matMenu">
+    <button mat-menu-item [routerLink]="['/admin/user']">
+      <mat-icon>group</mat-icon>
+      <span>Users</span>
+    </button>
+  </mat-menu>
+
 </div>

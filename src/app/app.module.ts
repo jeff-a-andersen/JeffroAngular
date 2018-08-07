@@ -26,6 +26,7 @@ import {
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { SettingComponent } from './user/setting/setting.component';
+import { UserListComponent } from './admin/user-list/user-list.component';
 
 @NgModule({
   imports: [
@@ -47,7 +48,8 @@ import { SettingComponent } from './user/setting/setting.component';
     LoginComponent,
     NavbarComponent,
     ProfileComponent,
-    SettingComponent
+    SettingComponent,
+    UserListComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
