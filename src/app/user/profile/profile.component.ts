@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
   user: User;
   submitted = false;
   loading = false;
+  strongPassword = false;
   profileForm: FormGroup;
   error = '';
 
@@ -37,18 +38,8 @@ export class ProfileComponent implements OnInit {
         firstName: ['' + this.user.firstName, Validators.required],
         lastName: ['' + this.user.lastName, Validators.required],
         currentPassword: [''],
-        newPassword: [
-          '',
-          Validators.pattern(
-            '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{8,}'
-          )
-        ],
-        newPasswordConfirm: [
-          null,
-          Validators.pattern(
-            '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{8,}'
-          )
-        ]
+        newPassword: [''],
+        newPasswordConfirm: [null]
       });
     });
   }
@@ -56,6 +47,17 @@ export class ProfileComponent implements OnInit {
   // convenience getter for easy access to form fields
   get f() {
     return this.profileForm.controls;
+  }
+
+  onPasswordStrengthChanged(strength) {
+    console.log('====================================');
+    console.log('onPasswordStrengthChanged', strength);
+    console.log('====================================');
+    if (strength === 4) {
+      this.strongPassword = true;
+    } else {
+      this.strongPassword = false;
+    }
   }
 
   onSubmit() {
@@ -73,8 +75,17 @@ export class ProfileComponent implements OnInit {
 
     if (newPwd) {
       if (!newPwdConf) {
+        this.error = '"Confirm New Password" is missing.';
+        this.loading = false;
         return;
       } else if (newPwd !== newPwdConf) {
+        this.error =
+          'The "New Password" and "Confirm New Password" values do NOT match.';
+        this.loading = false;
+        return;
+      } else if (this.strongPassword === false) {
+        this.error = 'The "New Password" is not strong enough.';
+        this.loading = false;
         return;
       } else {
         user.newPassword = this.profileForm.controls['newPassword'].value;
@@ -86,9 +97,12 @@ export class ProfileComponent implements OnInit {
     user.lastName = this.profileForm.controls['lastName'].value;
     user.confirmPassword = this.profileForm.controls['currentPassword'].value;
 
+    // https://github.com/antoantonyk/password-strength-meter
+
     this.userService.updateCurrent(user).subscribe(
       userUpd => {
         this.user = userUpd;
+        this.loading = false;
       },
       error => {
         this.error = error;
@@ -98,5 +112,4 @@ export class ProfileComponent implements OnInit {
 
     this.loading = true;
   }
-
 }

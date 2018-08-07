@@ -1,7 +1,7 @@
 <h2>Profile</h2>
-<form *ngIf="user" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+<form *ngIf="user" [formGroup]="profileForm" (ngSubmit)="onSubmit()" autocomplete="off">
   <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-  <mat-grid-list [cols]="3" [rowHeight]="70">
+  <mat-grid-list [cols]="3" [rowHeight]="75">
     <mat-grid-tile>
       <mat-form-field class="example-full-width">
         <input matInput placeholder="Username" value="{{user.username}}" formControlName="username" id="username">
@@ -27,47 +27,31 @@
       <mat-form-field class="example-full-width">
         <input matInput placeholder="New Password" type="password" formControlName="newPassword" id="newPassword">
       </mat-form-field>
-
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field class="example-full-width">
         <input matInput placeholder="Confirm New Password" [required]="this.profileForm.controls['newPassword'].value!=''" type="password"
           formControlName="newPasswordConfirm" id="newPasswordConfirm">
-
       </mat-form-field>
     </mat-grid-tile>
-
   </mat-grid-list>
 
-  <button [disabled]="loading" class="btn btn-primary">Save</button>
-  <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-  />
+
+  <mat-grid-list cols="3">
+    <mat-grid-tile>
+      <button [disabled]="loading" class="btn btn-primary">Save</button>
+      <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+      />
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <div *ngIf="user" style="width:80%;height: 90px !important;">
+        <password-strength-meter [minPasswordLength]="10" [password]="this.profileForm.controls['newPassword'].value" [enableFeedback]="true"
+          (strengthChange)="onPasswordStrengthChanged($event)"></password-strength-meter>
+
+        <div *ngIf="strongPassword">Meets Minimum Password Strength Requirements</div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
 
 </form>
-
-
-<br>
-<div>
-  Passwords must meet the following complexity requirements:
-  <ul>
-    <li>
-      At least 8 characters in length
-    </li>
-    <li>
-      Lowercase letters
-    </li>
-    <li>
-      Uppercase letters
-    </li>
-    <li>
-      Numbers
-    </li>
-    <li>
-      Special characters
-    </li>
-  </ul>
-</div>
-
-<div *ngIf="user" style="width: 400px;">
-  <password-strength-meter [password]="this.profileForm.controls['newPassword'].value" [enableFeedback]="true"></password-strength-meter>
-</div>
