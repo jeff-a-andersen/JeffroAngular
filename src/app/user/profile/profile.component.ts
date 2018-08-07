@@ -20,6 +20,7 @@ export class ProfileComponent implements OnInit {
   strongPassword = false;
   profileForm: FormGroup;
   error = '';
+  success = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -73,6 +74,9 @@ export class ProfileComponent implements OnInit {
 
     const user: User = new User();
 
+    this.success = '';
+    this.error = '';
+
     if (newPwd) {
       if (!newPwdConf) {
         this.error = '"Confirm New Password" is missing.';
@@ -101,6 +105,7 @@ export class ProfileComponent implements OnInit {
 
     this.userService.updateCurrent(user).subscribe(
       userUpd => {
+        this.success = 'Profile updated successfully.';
         this.user = userUpd;
         this.loading = false;
       },

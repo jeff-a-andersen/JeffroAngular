@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../_services';
 import { User } from '../../_models';
 import { first } from '../../../../node_modules/rxjs/operators';
+import {
+  MatTableDataSource,
+  MatTableModule,
+  MatTable
+} from '../../../../node_modules/@angular/material';
 
 @Component({
   selector: 'app-user-list',
@@ -10,6 +15,12 @@ import { first } from '../../../../node_modules/rxjs/operators';
 })
 export class UserListComponent implements OnInit {
   users: User[] = [];
+
+  @ViewChild('table') table: MatTable<Element>;
+
+  displayedColumns: string[] = ['username', 'firstName', 'lastName'];
+  dataSource = new MatTableDataSource([]);
+
   constructor(private userService: UserService) {}
 
   ngOnInit() {
@@ -18,6 +29,13 @@ export class UserListComponent implements OnInit {
       .pipe(first())
       .subscribe(users => {
         this.users = users;
+        this.dataSource = new MatTableDataSource(this.users);
+        this.table.dataSource = this.dataSource;
+        this.table.renderRows();
       });
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

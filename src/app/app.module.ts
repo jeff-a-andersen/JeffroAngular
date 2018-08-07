@@ -21,7 +21,8 @@ import {
   MatIconModule,
   MatDividerModule,
   MatGridListModule,
-  MatInputModule
+  MatInputModule,
+  MatTableModule
 } from '@angular/material';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProfileComponent } from './user/profile/profile.component';
@@ -40,6 +41,7 @@ import { UserListComponent } from './admin/user-list/user-list.component';
     MatDividerModule,
     MatGridListModule,
     MatInputModule,
+    MatTableModule,
     PasswordStrengthMeterModule
   ],
   declarations: [
