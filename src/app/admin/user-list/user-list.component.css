@@ -1,0 +1,47 @@
+table {
+  width: 100%;
+}
+
+tr.user-list-detail-row {
+  height: 0;
+}
+
+tr.user-list-element-row:not(.user-list-expanded-row):hover {
+  background: #f5f5f5;
+}
+
+tr.user-list-element-row:not(.user-list-expanded-row):active {
+  background: #efefef;
+}
+
+.user-list-element-row td {
+  border-bottom-width: 0;
+}
+
+.user-list-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.user-list-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.user-list-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.user-list-element-description {
+  padding: 16px;
+}
+
+.user-list-element-description-attribution {
+  opacity: 0.5;
+}

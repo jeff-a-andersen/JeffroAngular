@@ -2,27 +2,79 @@
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 </mat-form-field>
 
-<table mat-table #table [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%;">
-
-  <!-- Position Column -->
-  <ng-container matColumnDef="username">
-    <th mat-header-cell *matHeaderCellDef> Username </th>
-    <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+  <ng-container matColumnDef="{{column.colName}}" *ngFor="let column of columnLabels">
+    <th mat-header-cell *matHeaderCellDef> {{column.colLabel}} </th>
+    <td mat-cell *matCellDef="let element"> {{element[column.colName]}} </td>
   </ng-container>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="firstName">
-    <th mat-header-cell *matHeaderCellDef> First Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+      <div class="user-list-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+
+
+        <form *ngIf="loaded" [formGroup]="userForm" (ngSubmit)="onSubmit()" autocomplete="off">
+
+          <mat-grid-list [cols]="3" [rowHeight]="300">
+            <mat-grid-tile>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Username" value="{{element.username}}" id="username">
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="First name" value="{{element.firstName}}" [required]="true" id="firstName">
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Last Name" value="{{element.lastName}}" [required]="true" id="lastName">
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="New Password" type="password" id="newPassword">
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Confirm New Password" type="password" id="newPasswordConfirm">
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+
+
+
+        </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </td>
   </ng-container>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="lastName">
-    <th mat-header-cell *matHeaderCellDef> Last Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
-  </ng-container>
-
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="user-list-element-row" [class.user-list-expanded-row]="expandedElement === element"
+    (click)="expandedElement = element">
+  </tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="user-list-detail-row"></tr>
 </table>
