@@ -9,14 +9,14 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getAll() {
-    return this.http.get<User[]>('http://localhost:8080/user');
+    return this.http.get<User[]>('http://localhost:8090/user');
   }
 
   getCurrent() {
-    return this.http.get<User>('http://localhost:8080/user/current');
+    return this.http.get<User>('http://localhost:8090/user/current');
   }
 
   updateCurrent(user: User): Observable<User> {
-    return this.http.post<User>('http://localhost:8080/user/current', user);
+    return this.http.post<User>('http://localhost:8090/user/current', user);
   }
 }
