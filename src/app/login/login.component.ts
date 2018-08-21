@@ -6,6 +6,7 @@ import { Observable, EMPTY, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { AuthenticationService } from '../_services';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private navbarComponent: NavbarComponent
   ) {}
 
   ngOnInit() {
@@ -57,6 +59,8 @@ export class LoginComponent implements OnInit {
       .subscribe(
         result => {
             this.router.navigate([this.returnUrl]);
+            this.navbarComponent.ngOnInit();
+
         },
         error => {
           this.error = error;

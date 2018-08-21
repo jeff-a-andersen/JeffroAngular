@@ -7,6 +7,7 @@ import {
   FormBuilder,
   Validators
 } from '../../../../node_modules/@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -28,6 +29,36 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.userService.getCurrent2();
+    // let localProfileForm = this.profileForm;
+    // const localFormBuilder = this.formBuilder;
+    // this.user = this.userService.getCurrentUser;
+    // this.user.subscribe({
+    //   next(user) {
+    //     if (user.id) {
+    //       console.log('User =[' + user.id + ']');
+    //       // this.profileForm = localFormBuilder.group({});
+
+
+    //       localProfileForm = localFormBuilder.group({
+    //         username: [
+    //           { value: '' + user.username, disabled: true },
+    //           Validators.required
+    //         ],
+    //         firstName: ['' + user.firstName, Validators.required],
+    //         lastName: ['' + user.lastName, Validators.required],
+    //         currentPassword: [''],
+    //         newPassword: [''],
+    //         newPasswordConfirm: [null]
+    //       });
+
+    //     }
+    //   }
+    // });
+
+    // this.profileForm=localProfileForm;
+
+    // =============== OLD - But works... ===========
     this.userService.getCurrent().subscribe(user => {
       this.user = user;
 
