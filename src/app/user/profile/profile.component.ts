@@ -7,7 +7,7 @@ import {
   FormBuilder,
   Validators
 } from '../../../../node_modules/@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +15,10 @@ import { Observable } from 'rxjs';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  user: User;
+  // user: User;
+  user$: Observable<User>;
+
+  private userSubject = new Subject<User>();
   submitted = false;
   loading = false;
   strongPassword = false;
@@ -28,51 +31,31 @@ export class ProfileComponent implements OnInit {
     private userService: UserService
   ) {}
 
+  setUserSubject(user: User) {
+    this.userSubject.next(user);
+  }
+  getUserSubject(): Observable<User> {
+    return this.userSubject.asObservable();
+  }
+
   ngOnInit() {
     this.userService.getCurrent2();
-    // let localProfileForm = this.profileForm;
-    // const localFormBuilder = this.formBuilder;
-    // this.user = this.userService.getCurrentUser;
-    // this.user.subscribe({
-    //   next(user) {
-    //     if (user.id) {
-    //       console.log('User =[' + user.id + ']');
-    //       // this.profileForm = localFormBuilder.group({});
 
-
-    //       localProfileForm = localFormBuilder.group({
-    //         username: [
-    //           { value: '' + user.username, disabled: true },
-    //           Validators.required
-    //         ],
-    //         firstName: ['' + user.firstName, Validators.required],
-    //         lastName: ['' + user.lastName, Validators.required],
-    //         currentPassword: [''],
-    //         newPassword: [''],
-    //         newPasswordConfirm: [null]
-    //       });
-
-    //     }
-    //   }
-    // });
-
-    // this.profileForm=localProfileForm;
-
-    // =============== OLD - But works... ===========
-    this.userService.getCurrent().subscribe(user => {
-      this.user = user;
-
-      this.profileForm = this.formBuilder.group({
-        username: [
-          { value: '' + this.user.username, disabled: true },
-          Validators.required
-        ],
-        firstName: ['' + this.user.firstName, Validators.required],
-        lastName: ['' + this.user.lastName, Validators.required],
-        currentPassword: [''],
-        newPassword: [''],
-        newPasswordConfirm: [null]
-      });
+    this.user$ = this.userService.getCurrentUser;
+    this.user$.subscribe(user => {
+      if (user.id) {
+        this.profileForm = this.formBuilder.group({
+          username: [
+            { value: '' + user.username, disabled: true },
+            Validators.required
+          ],
+          firstName: ['' + user.firstName, Validators.required],
+          lastName: ['' + user.lastName, Validators.required],
+          currentPassword: [''],
+          newPassword: [''],
+          newPasswordConfirm: [null]
+        });
+      }
     });
   }
 
@@ -137,7 +120,8 @@ export class ProfileComponent implements OnInit {
     this.userService.updateCurrent(user).subscribe(
       userUpd => {
         this.success = 'Profile updated successfully.';
-        this.user = userUpd;
+        this.userService.setCurrentUser(userUpd);
+        // this.user = userUpd;
         this.loading = false;
       },
       error => {

@@ -45,7 +45,8 @@ export class UserService {
         const hasAdminRole: boolean = this.hasRole('ROLE_ADMIN', user);
 
         this.admin.next(hasAdminRole);
-        this.setCurrentUser(user);
+        this.userCurrent.next(user);
+        // this.setCurrentUser(user);
       });
   }
 

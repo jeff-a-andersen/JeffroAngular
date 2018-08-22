@@ -1,22 +1,22 @@
 <div *ngIf="profileForm">
 <h2>Profile</h2>
-<form *ngIf="user" [formGroup]="profileForm" (ngSubmit)="onSubmit()" autocomplete="off">
+<form *ngIf="user$" [formGroup]="profileForm" (ngSubmit)="onSubmit()" autocomplete="off">
   <div *ngIf="error" class="alert alert-danger">{{error}}</div>
   <div *ngIf="success" class="alert alert-success">{{success}}</div>
   <mat-grid-list [cols]="3" [rowHeight]="75">
     <mat-grid-tile>
       <mat-form-field class="example-full-width">
-        <input matInput placeholder="Username" value="{{user.username}}" formControlName="username" id="username">
+        <input matInput placeholder="Username" formControlName="username" id="username">
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field class="example-full-width">
-        <input matInput placeholder="First name" value="{{user.firstName}}" [required]="true" formControlName="firstName" id="firstName">
+        <input matInput placeholder="First name" [required]="true" formControlName="firstName" id="firstName">
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field class="example-full-width">
-        <input matInput placeholder="Last Name" value="{{user.lastName}}" [required]="true" formControlName="lastName" id="lastName">
+        <input matInput placeholder="Last Name" [required]="true" formControlName="lastName" id="lastName">
       </mat-form-field>
     </mat-grid-tile>
     <!-- ===================================================================================== -->
