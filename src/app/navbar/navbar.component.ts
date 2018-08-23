@@ -12,6 +12,8 @@ import { User } from '../_models';
 export class NavbarComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
   isAdmin$: Observable<boolean>; // = new BehaviorSubject<boolean>(false);
+  firstName: String;
+  lastName: String;
   private admin = new BehaviorSubject<boolean>(false);
 
   get isAdmin() {
@@ -31,32 +33,13 @@ export class NavbarComponent implements OnInit {
     this.isLoggedIn$ = this.authService.isLoggedIn;
     this.isAdmin$ = this.userService.isAdmin; // this.isAdmin; // this.admin.asObservable();
     this.userService.getCurrent2();
-    // this.isLoggedIn$.subscribe(data => {
-    //   console.log('this.isLoggedIn$=[' + data + ']');
-    // });
-    // this.isAdmin$.subscribe(data => {
-    //   console.log('this.isAdmin$=[' + data + ']');
-    // });
-    // this.userService.getCurrent();
 
-    // this.userService
-    //   .getCurrent()
-    //   .pipe()
-    //   .subscribe(user => {
-    //     console.log('Jeffro');
-    //     this.setAdmin(this.hasRole('ROLE_ADMIN', user));
-    //     this.isAdmin$ = this.isAdmin;
-    //     // this.admin.next(this.hasRole('ROLE_ADMIN', user));
-    //     // console.log('this.isAdmin=[' + this.isAdmin.value + ']');
-    //     // console.log('this.isAdmin$=[' + this.isAdmin$ + ']');
-
-    //     // this.isAdmin = new BehaviorSubject<boolean>(
-    //     //   this.hasRole('ROLE_ADMIN', user)
-    //     // );
-    //     // this.isAdmin$ = this.isAdmin.asObservable();
-
-    //     // this.isAdmin$.next(this.hasRole('ROLE_ADMIN', user));
-    //   });
+    this.userService.getCurrentUser.subscribe(user => {
+      if (user.id) {
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+      }
+    });
   }
 
   hasRole(roleName: String, user: User): boolean {

@@ -1,4 +1,9 @@
+
+
 <div style="float:right;padding-right: 1em;" *ngIf="isLoggedIn$ | async" name="jeffro-test">
+  <span *ngIf="lastName">
+      <mat-icon>person</mat-icon> <span style="vertical-align:top;display:inline-block;">Welcome {{ firstName }} {{ lastName }}!</span>
+  </span>
   <button mat-icon-button [matMenuTriggerFor]="menu" style="height:47px;border-style:none;background-color: transparent;">
     <mat-icon style="margin-top: 10px;">more_vert</mat-icon>
   </button>
