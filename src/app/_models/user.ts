@@ -7,6 +7,7 @@ export class User {
   confirmPassword: string;
   firstName: string;
   lastName: string;
+  email: string;
   newPassword: string;
   roles: Role[];
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../_services';
 import { User } from '../../_models';
-import { first } from '../../../../node_modules/rxjs/operators';
+import { first, map } from '../../../../node_modules/rxjs/operators';
 import {
   MatTableDataSource,
   MatTableModule,
@@ -18,6 +18,7 @@ import {
   FormGroup,
   FormBuilder
 } from '../../../../node_modules/@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-list',
@@ -45,6 +46,7 @@ export class UserListComponent implements OnInit {
   table: MatTable<User>;
   loaded: Boolean = false;
   // table: MatTable<Element>;
+  loading: Boolean = false;
 
   columnsToDisplay: string[] = ['username', 'firstName', 'lastName'];
   columnLabels = [

@@ -28,6 +28,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { SettingComponent } from './user/setting/setting.component';
 import { UserListComponent } from './admin/user-list/user-list.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { UserListComponent } from './admin/user-list/user-list.component';
     MatGridListModule,
     MatInputModule,
     MatTableModule,
-    PasswordStrengthMeterModule
+    PasswordStrengthMeterModule,
+    FormsModule
   ],
   declarations: [
     AppComponent,
