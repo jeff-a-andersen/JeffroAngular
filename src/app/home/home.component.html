@@ -1,3 +1,19 @@
-﻿<h1>Home</h1>
-<p>You're logged in with Angular 6 & JWT!!</p>
+﻿
+<div  [class.show]="displayIframe"
+      [class.hide]="!displayIframe">
+  <iframe
+          (load)="zohoMailLoaded()"
+          id="zoho-mail-frame"
+          src="https://mail.zoho.com"
+          height="600px"
+          width="100%"
+          style="height:600px;width:100%;"></iframe>
+</div>
+<div *ngIf="loaded">
+  <div  [class.show]="!displayIframe"
+        [class.hide]="displayIframe">
+    <a href="https://mail.zoho.com" target="_blank">Email</a>
+        <p>NOTE: In Chrome, you can view email in an iframe of this application if you enable <a href="https://chrome.google.com/webstore/detail/requestly-redirect-url-mo/mdnleldcmiljblolnjhpnblkcekpdkpa?hl=en" target="_blank">requestly</a> and creating a <a href="">header modification</a>.</p>
 
+  </div>
+</div>

@@ -3,7 +3,7 @@
 <form *ngIf="user$" [formGroup]="profileForm" (ngSubmit)="onSubmit()" autocomplete="off">
   <div *ngIf="error" class="alert alert-danger">{{error}}</div>
   <div *ngIf="success" class="alert alert-success">{{success}}</div>
-  <mat-grid-list [cols]="3" [rowHeight]="75">
+  <mat-grid-list [cols]="4" [rowHeight]="85">
     <mat-grid-tile>
       <mat-form-field class="example-full-width">
         <input matInput placeholder="Username" formControlName="username" id="username">
@@ -17,6 +17,12 @@
     <mat-grid-tile>
       <mat-form-field class="example-full-width">
         <input matInput placeholder="Last Name" [required]="true" formControlName="lastName" id="lastName">
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field style="width:280px !important;">
+        <input matInput placeholder="Email" [email]="true" [required]="true" formControlName="email" id="email">
+        <mat-error class="error-message" *ngIf="profileForm.get('email').invalid">Email must be a valid email address</mat-error>
       </mat-form-field>
     </mat-grid-tile>
     <!-- ===================================================================================== -->

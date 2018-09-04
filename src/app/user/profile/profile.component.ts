@@ -9,6 +9,10 @@ import {
 } from '../../../../node_modules/@angular/forms';
 import { Observable, Subject } from 'rxjs';
 
+
+/**
+ * This component displays the current users profile and allows them to edit it.
+ */
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -21,9 +25,22 @@ export class ProfileComponent implements OnInit {
   private userSubject = new Subject<User>();
   submitted = false;
   loading = false;
+  /**
+   * Flag to indicate if the password entered is strong or not.
+   */
   strongPassword = false;
+  /**
+   * The form containing the user profile controls.
+   */
   profileForm: FormGroup;
+  /**
+   * Stores the error message, if any.
+   */
   error = '';
+
+  /**
+   * Stores the success message, if any.
+   */
   success = '';
 
   constructor(
@@ -44,6 +61,10 @@ export class ProfileComponent implements OnInit {
     this.user$ = this.userService.getCurrentUser;
     this.user$.subscribe(user => {
       if (user.id) {
+        let email = '';
+        if (user.email) {
+          email = user.email;
+        }
         this.profileForm = this.formBuilder.group({
           username: [
             { value: '' + user.username, disabled: true },
@@ -51,6 +72,8 @@ export class ProfileComponent implements OnInit {
           ],
           firstName: ['' + user.firstName, Validators.required],
           lastName: ['' + user.lastName, Validators.required],
+          email: [email, Validators.compose(
+            [Validators.email, Validators.required])],
           currentPassword: [''],
           newPassword: [''],
           newPasswordConfirm: [null]
@@ -63,7 +86,11 @@ export class ProfileComponent implements OnInit {
   get f() {
     return this.profileForm.controls;
   }
-
+/**
+ * Sets the strong password flag based on the strength parameter received.
+ *
+ * @param strength
+ */
   onPasswordStrengthChanged(strength) {
     console.log('====================================');
     console.log('onPasswordStrengthChanged', strength);
@@ -74,7 +101,9 @@ export class ProfileComponent implements OnInit {
       this.strongPassword = false;
     }
   }
-
+/**
+ * Handles form submission.
+ */
   onSubmit() {
     this.submitted = true;
 
@@ -114,7 +143,7 @@ export class ProfileComponent implements OnInit {
     user.firstName = this.profileForm.controls['firstName'].value;
     user.lastName = this.profileForm.controls['lastName'].value;
     user.confirmPassword = this.profileForm.controls['currentPassword'].value;
-
+    user.email = this.profileForm.controls['email'].value;
     // https://github.com/antoantonyk/password-strength-meter
 
     this.userService.updateCurrent(user).subscribe(

@@ -1,3 +1,4 @@
-<p>
-  setting works!
-</p>
+<form [formGroup]="settingsFormGroup">
+  <label for="showTutorial" value="">Show Tutorial:&nbsp;</label>
+  <input id="showTutorial" type="checkbox" formControlName="showTutorial" />
+</form>
